@@ -2,14 +2,11 @@ import { default as Web3 } from 'web3';
 import { default as contract } from 'truffle-contract';
 import { default as HDWalletProvider} from 'truffle-hdwallet-provider';
 import { default as fs } from 'fs';
+import { default as config } from '../config.json';
 
 import HumantivMeditPoolContract from '../build/contracts/HumantivMeditPool.json';
 
-const infuraKey = "6044524c9c914ef48641e4e2783c4240";
-const mnemonic = fs.readFileSync(".secret").toString().trim();
-const accountNumber = 2;
-
-var web3 = new Web3(new HDWalletProvider(mnemonic, `https://ropsten.infura.io/${infuraKey}`, accountNumber));
+var web3 = new Web3(new HDWalletProvider(config.mnemonic, `https://ropsten.infura.io/${config.infurakey}`, config.account));
 
 var HumantivMeditPool = contract(HumantivMeditPoolContract);
 HumantivMeditPool.setProvider(web3.currentProvider);
