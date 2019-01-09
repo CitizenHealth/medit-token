@@ -11,7 +11,6 @@ var web3 = new Web3(new HDWalletProvider(config.mnemonic, `https://ropsten.infur
 var HumantivMeditPool = contract(HumantivMeditPoolContract);
 HumantivMeditPool.setProvider(web3.currentProvider);
 
-
 var accounts;
 var account;
 
@@ -61,9 +60,20 @@ module.exports = {
       .then(contract => contract.releaseAmount_({from: account}))
   },
 
-  getReleaseRequestTime : function() {
+  getReleaseTime : function() {
     return HumantivMeditPool.deployed()
-      .then(contract => contract.releaseRequestTime_({from: account}))
+      .then(function(contract) {
+        this.contract = contract;
+      })
+      .then(() => this.contract.releaseRequestTime_({from: account}))
+      .then(function(time) {
+        this.requestTime = time;
+        return this.contract.releaseTimeLock_({from: account});
+      })
+      .then(function(lock) {
+        Math.max(0, lock - ((new Date().getTime() / 1000) - 
+                            this.requestTime))
+      })
   }
 }
 

@@ -18,7 +18,7 @@ contract HumantivMeditPool is Ownable, Pausable {
 
   Roles.Role private humantivRole_;
   MeditToken private token_;
-  uint256 private releaseTimeLock_;
+  uint256 public releaseTimeLock_;
   uint256 public releaseAmount_;
   uint256 public releaseRequestTime_;  
 
