@@ -50,14 +50,14 @@ module.exports = {
       .then(contract => contract.requestIssuance(value, {from: account}))
   },
 
-  issueMedit : function(to, value) {
+  issueMedit : function(to, value) { // need to deal with error
     return HumantivMeditPool.deployed()
       .then(contract => contract.issueMedit(to, value, {from: account}))
   },
 
   getReleaseAmount : function() {
     return HumantivMeditPool.deployed()
-      .then(contract => contract.releaseAmount_({from: account}))
+      .then(contract => contract.releaseAmount_.call({from: account}))
   },
 
   getReleaseTime : function() {
@@ -65,10 +65,10 @@ module.exports = {
       .then(function(contract) {
         this.contract = contract;
       })
-      .then(() => this.contract.releaseRequestTime_({from: account}))
+      .then(() => this.contract.releaseRequestTime_.call({from: account}))
       .then(function(time) {
         this.requestTime = time;
-        return this.contract.releaseTimeLock_({from: account});
+        return this.contract.releaseTimeLock_.call({from: account});
       })
       .then(function(lock) {
         Math.max(0, lock - ((new Date().getTime() / 1000) - 
