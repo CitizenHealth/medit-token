@@ -57,6 +57,16 @@ module.exports = {
   issueMedit : function(to, value) {
     return HumantivMeditPool.deployed()
       .then(contract => contract.issueMedit(to, value, {from: account}))
+  },
+
+  getReleaseAmount : function() {
+    return HumantivMeditPool.deployed()
+      .then(contract => contract.releaseAmount_({from: account}))
+  },
+
+  getReleaseRequestTime : function() {
+    return HumantivMeditPool.deployed()
+      .then(contract => contract.releaseRequestTime_({from: account}))
   }
 }
 
